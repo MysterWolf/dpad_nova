@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../models/saved_device.dart';
 import '../models/samsung_device.dart';
 import '../providers/saved_devices_provider.dart';
 import 'remote_screen.dart';

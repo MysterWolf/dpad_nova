@@ -75,7 +75,7 @@ class RemoteScreen extends ConsumerWidget {
     if (status == SamsungStatus.connected) return null;
     final msg = switch (status) {
       SamsungStatus.connecting => 'Connecting…',
-      SamsungStatus.authenticating => 'Waiting for TV approval…',
+      SamsungStatus.authorizing => 'Waiting for TV approval…',
       SamsungStatus.error => 'Connection error',
       _ => 'Disconnected',
     };

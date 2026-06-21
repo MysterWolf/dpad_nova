@@ -17,8 +17,11 @@ class RemoteNotifier extends StateNotifier<RemoteState> {
   final SamsungService _svc;
   final String ip;
 
+  // ignore: unused_field
   bool _intentionalDisconnect = false;
+  // ignore: unused_field
   bool _reconnecting = false;
+  // ignore: unused_field
   bool _didAutoReconnect = false;
 
   RemoteNotifier(this._svc, this.ip) : super(const RemoteState());

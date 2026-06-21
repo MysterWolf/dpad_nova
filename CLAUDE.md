@@ -146,5 +146,16 @@ Settings → General → External Device Manager → Device Connect Manager → 
 
 On first connection the TV shows a pairing prompt — accept it. Subsequent connections are silent (token is cached).
 
+## Changelog
+
+### June 2026 — Phase 1: Samsung protocol layer
+- `samsung_service.dart` — full WebSocket service: connect handshake, token extraction + persistence, sendKey, wss→ws fallback, auto-reconnect (3-flag guard)
+- `samsung_discovery_service.dart` — REST probe (port 8001) + mDNS scan (`_samsungctrl._tcp`)
+- `samsung_app_launcher.dart` — fixed deeplink map for Netflix, Prime Video, Disney+, Hulu, Max, YouTube
+- `SamsungStatus` enum updated: `authenticating` renamed to `authorizing`; `ready` state added
+- `multicast_dns ^0.3.3` added to pubspec
+
+Services are not yet wired into providers or screens (Phase 2).
+
 ## Claude Code Session Starter
 "I'm working on DPad Nova — a Flutter Samsung Tizen TV remote via WebSocket at github.com/MysterWolf/dpad_nova. Pull the repo and read CLAUDE.md before making any changes. Respect all invariants — especially the auth token persistence and the key event JSON format. Confirm you understand before I give you the next task."
