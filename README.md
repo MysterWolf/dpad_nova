@@ -1,17 +1,29 @@
-# dpad_nova
+# DPad Nova
 
-A new Flutter project.
+A simple Samsung Tizen TV remote for Android. Connects over local WiFi — no account, no ads, no subscription.
 
-## Getting Started
+## Installation
 
-This project is a starting point for a Flutter application.
+DPad Nova is in beta — sideload only.
 
-A few resources to get you started if this is your first Flutter project:
+**Download:** [dpad-nova-latest.apk](https://github.com/MysterWolf/dpad_nova/releases/download/latest/dpad-nova-latest.apk)
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+### One-time TV setup
+1. On your Samsung TV: **Settings → General → Network → Expert Settings → Remote Access → ON**
+   (Many TVs ship with this already enabled.)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### Install the app
+1. Open the download link above on your Android phone
+2. Tap the APK to install — allow installs from your browser if prompted
+
+### First connect
+1. Open DPad Nova — your TV should appear automatically
+2. If it doesn't, enter your TV's IP manually (Settings → General → Network → Network Status on the TV)
+3. Tap Connect, then **look at your TV** — it will show an authorization dialog
+4. Select Allow on the TV
+5. Done — the app remembers authorization, no repeat prompt
+
+### Requirements
+- Samsung Tizen TV (2016 or newer)
+- Android phone on the same WiFi network as the TV
+- Nothing installs on the TV
