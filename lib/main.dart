@@ -1,12 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'providers/saved_devices_provider.dart';
+import 'services/saved_devices_service.dart';
 import 'screens/splash_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
-  runApp(const ProviderScope(child: DPadNovaApp()));
+
+  // Pre-load saved devices before first frame so the provider starts with
+  // the correct list — no empty-list flash on the discovery/remote screen.
+  final initialDevices = await SavedDevicesService().load();
+
+  runApp(
+    ProviderScope(
+      overrides: [
+        savedDevicesProvider.overrideWith(
+          (ref) => SavedDevicesNotifier(
+            SavedDevicesService(),
+            initial: initialDevices,
+          ),
+        ),
+      ],
+      child: const DPadNovaApp(),
+    ),
+  );
 }
 
 class DPadNovaApp extends StatelessWidget {

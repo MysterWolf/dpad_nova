@@ -148,6 +148,25 @@ On first connection the TV shows a pairing prompt — accept it. Subsequent conn
 
 ## Changelog
 
+### June 2026 — Phase 2: Providers and screens wired
+
+**Providers:**
+- `discovery_provider.dart` — `DiscoveryNotifier` wraps `SamsungDiscoveryService`; exposes `scan()` (mDNS, sets `isScanning`), `probe(ip)` (REST confirm), `reset()`
+- `remote_provider.dart` — `RemoteNotifier` wires `SamsungService` callbacks; exposes `connect/disconnect/reconnect`, `sendKey`, `volumeUp/Down`, `channelUp/Down`, `powerOff`, `launchApp`, `insertText`, `deleteChar`. `SamsungKey` constants moved here. `TvConnectionState` enum (connected/connecting/disconnected) derived from `SamsungStatus`. `RemoteState` computed getters: `isActive`, `isReady`, `isAuthorizing`, `isConnecting`, `isError`, `connectionState`.
+- Auto-reconnect remains entirely in `SamsungService` — `RemoteNotifier` does not duplicate guard logic.
+
+**Screens:**
+- `discovery_screen.dart` — Saved TVs section (rename/delete), mDNS results (deduped), manual IP with REST probe before connect, bookmark sheet, scan spinner in AppBar.
+- `remote_screen.dart` — Persistent top bar (status dot/reconnect, power, settings, keyboard toggle), authorizing banner, error banner+retry, 5 collapsible sections (Vol&Ch, Navigation, Playback, Keypad, Apps), QWERTY overlay, 6 app launcher buttons (Netflix, Prime Video, Disney+, Hulu, Max, YouTube).
+- `splash_screen.dart` — Simplified: just waits 3s then reads pre-loaded provider state; no redundant load.
+- `SamsungApp` placeholder class removed from `remote_screen.dart`; uses `SamsungAppId` from `samsung_app_launcher.dart`.
+
+**App entry:**
+- `main.dart` — Pre-loads `SavedDevicesService` before `runApp`; passes initial list via `ProviderScope` override for zero-flash startup.
+
+**Widget:**
+- `remote_button.dart` — Updated to DPad Pilot API: `child` (Widget), `color`, `size`, `width`, `borderRadius`.
+
 ### June 2026 — Phase 1: Samsung protocol layer
 - `samsung_service.dart` — full WebSocket service: connect handshake, token extraction + persistence, sendKey, wss→ws fallback, auto-reconnect (3-flag guard)
 - `samsung_discovery_service.dart` — REST probe (port 8001) + mDNS scan (`_samsungctrl._tcp`)

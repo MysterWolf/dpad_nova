@@ -1,43 +1,47 @@
 import 'package:flutter/material.dart';
 
 class RemoteButton extends StatelessWidget {
-  final IconData? icon;
-  final String? label;
+  final Widget child;
   final VoidCallback? onPressed;
+  final Color? color;
   final double size;
+  final double? width;
+  final BorderRadius? borderRadius;
 
   const RemoteButton({
     super.key,
-    this.icon,
-    this.label,
+    required this.child,
     this.onPressed,
+    this.color,
     this.size = 52,
-  }) : assert(icon != null || label != null);
+    this.width,
+    this.borderRadius,
+  });
 
   @override
   Widget build(BuildContext context) {
-    final cs = Theme.of(context).colorScheme;
-    return SizedBox(
-      width: size,
-      height: size,
-      child: Material(
-        color: cs.surface,
-        shape: const CircleBorder(),
-        child: InkWell(
-          customBorder: const CircleBorder(),
-          onTap: onPressed,
-          child: Center(
-            child: icon != null
-                ? Icon(icon, color: cs.onSurface, size: size * 0.45)
-                : Text(
-                    label!,
-                    style: TextStyle(
-                      color: cs.onSurface,
-                      fontSize: size * 0.28,
-                      fontWeight: FontWeight.w600,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
+    final bg = color ?? const Color(0xFF1E1E3A);
+    final br = borderRadius ?? BorderRadius.circular(size / 2);
+
+    return Material(
+      color: bg,
+      borderRadius: br,
+      child: InkWell(
+        onTap: onPressed,
+        borderRadius: br,
+        splashColor: Colors.white24,
+        highlightColor: Colors.white12,
+        child: Container(
+          width: width ?? size,
+          height: size,
+          alignment: Alignment.center,
+          child: DefaultTextStyle(
+            style: const TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.w600,
+              color: Colors.white70,
+            ),
+            child: child,
           ),
         ),
       ),

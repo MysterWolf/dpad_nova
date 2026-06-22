@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../models/saved_device.dart';
 import '../models/samsung_device.dart';
 import '../providers/saved_devices_provider.dart';
-import '../services/saved_devices_service.dart';
 import 'discovery_screen.dart';
 import 'remote_screen.dart';
 
@@ -21,24 +19,22 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
     _run();
   }
 
+  // Devices are pre-loaded in main() and already in the provider.
+  // We just wait for the splash duration then navigate.
   Future<void> _run() async {
-    List<SavedDevice> saved = [];
-    await Future.wait([
-      Future.delayed(const Duration(seconds: 3)),
-      () async { saved = await SavedDevicesService().load(); }(),
-    ]);
+    await Future.delayed(const Duration(seconds: 3));
     if (!mounted) return;
-    ref.read(savedDevicesProvider.notifier).init(saved);
-    _navigate(saved);
+    final saved = ref.read(savedDevicesProvider);
+    _navigate(saved.length == 1 ? saved.first.ip : null,
+        saved.length == 1 ? saved.first.name : null);
   }
 
-  void _navigate(List<SavedDevice> saved) {
+  void _navigate(String? singleIp, String? singleName) {
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(
         builder: (ctx) {
-          if (saved.length == 1) {
-            final d = saved.first;
-            final device = SamsungDevice(ip: d.ip, name: d.name);
+          if (singleIp != null && singleName != null) {
+            final device = SamsungDevice(ip: singleIp, name: singleName);
             return RemoteScreen(
               device: device,
               onSwitch: () => Navigator.of(ctx).pushReplacement(
