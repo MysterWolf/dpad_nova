@@ -174,7 +174,13 @@ On first connection the TV shows a pairing prompt — accept it. Subsequent conn
 - `SamsungStatus` enum updated: `authenticating` renamed to `authorizing`; `ready` state added
 - `multicast_dns ^0.3.3` added to pubspec
 
-Services are not yet wired into providers or screens (Phase 2).
+### June 2026 — Phase 3: Release build
+
+- `flutter build apk --release` — clean build, no issues (51.2 MB / 49 MB on disk)
+- Deleted dead `discovery_service.dart` scaffold stub (never imported)
+- Permanent download URL:
+  `https://github.com/MysterWolf/dpad_nova/releases/download/latest/dpad-nova-latest.apk`
+- GitHub release tag: `latest` — asset `dpad-nova-latest.apk`
 
 ## Claude Code Session Starter
 "I'm working on DPad Nova — a Flutter Samsung Tizen TV remote via WebSocket at github.com/MysterWolf/dpad_nova. Pull the repo and read CLAUDE.md before making any changes. Respect all invariants — especially the auth token persistence and the key event JSON format. Confirm you understand before I give you the next task."
